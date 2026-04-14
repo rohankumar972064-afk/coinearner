@@ -1,0 +1,329 @@
+// Version: 1.0.0
+type AdWatchRecord__999013527 =
+  {
+    var adWatchCount : Nat;
+    var adWatchDate : Timestamp__301639476;
+    userId : UserId__158757552
+  };
+type AnnouncementTarget__487350821 =
+  {#adminsOnly; #all; #inactiveUsers; #newUsers};
+type AnnouncementUrgency__596239234 = {#info; #urgent; #warning};
+type Announcement__160704614 =
+  {
+    createdAt : Timestamp__301639476;
+    createdBy : UserId__158757552;
+    expiresAt : ?Timestamp__301639476;
+    id : Nat;
+    var isActive : Bool;
+    message : Text;
+    scheduledAt : ?Timestamp__301639476;
+    target : AnnouncementTarget__487350821;
+    title : Text;
+    urgency : AnnouncementUrgency__596239234
+  };
+type AppSettings__416535824 =
+  {
+    adsEnabled : Bool;
+    coinsPerAd : Nat;
+    dailyBaseReward : Nat;
+    dailyCoinsGrantCap : Nat;
+    dailyRewardsEnabled : Bool;
+    fraudPenaltyCoins : Nat;
+    lastModified : Timestamp__301639476;
+    maxCoinsPerUser : Nat;
+    maxDailyAdWatches : Nat;
+    minWithdrawalRupees : Nat;
+    modifiedBy : ?UserId__158757552;
+    referralBonus : Nat;
+    referralsEnabled : Bool;
+    streakCap : Nat;
+    streakMultiplier : Nat;
+    tasksEnabled : Bool;
+    withdrawalsEnabled : Bool
+  };
+type BlockAuditEntry__17361828 =
+  {
+    adminId : UserId__158757552;
+    blocked : Bool;
+    reason : Text;
+    timestamp : Timestamp__301639476
+  };
+type Coins__629831197 = Nat;
+type DailyClaimRecord__343162850 =
+  {
+    var lastClaimTime : Timestamp__301639476;
+    var streakDays : Nat;
+    userId : UserId__158757552
+  };
+type Data__159895909<T> = {var count : Nat__490723111; elements : [var ?T]};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type FraudFlagType__720485834 =
+  {
+    #earlyWithdrawal;
+    #manualFlag;
+    #multipleAccounts;
+    #referralLoop;
+    #suspiciousAdClicks;
+    #suspiciousReferral
+  };
+type FraudFlag__888929505 =
+  {
+    evidence : Text;
+    flagType : FraudFlagType__720485834;
+    flaggedAt : Timestamp__301639476;
+    var isResolved : Bool;
+    reason : Text;
+    var resolution : ?FraudResolution__909090898;
+    var resolvedAt : ?Timestamp__301639476;
+    var resolvedBy : ?UserId__158757552;
+    userId : UserId__158757552
+  };
+type FraudResolution__909090898 = {#blockUser; #dismiss; #markLegitimate};
+type HttpHeader__504881626 = {name : Text; value : Text};
+type HttpRequest__724360965 =
+  {
+    body : ?Blob;
+    headers : [HttpHeader__504881626];
+    is_replicated : ?Bool;
+    max_response_bytes : ?Nat64;
+    method : {#get; #head; #post};
+    transform :
+      ?{
+         context : Blob;
+         function :
+           shared query {context : Blob; response : HttpResponse__943424984} ->
+             async HttpResponse__943424984
+       };
+    url : Text
+  };
+type HttpResponse__943424984 =
+  {body : Blob; headers : [HttpHeader__504881626]; status : Nat};
+type Int__270357528 = Int__616954475;
+type Int__616954475 = Int;
+type Internal__667636161<T> =
+  {children : [var ?Node__92254746<T>]; data : Data__159895909<T>};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type InviteCode__761281821 =
+  {code : Text; created : Time__900049286; used : Bool};
+type Leaf__520550824<T> = {data : Data__159895909<T>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Node__92254746<T> =
+  {#internal : Internal__667636161<T>; #leaf : Leaf__520550824<T>};
+type OtpRecord__734798553 =
+  {mobileNumber : Text; otpCode : Text; otpExpiry : Timestamp__301639476};
+type RSVP__815186634 =
+  {
+    attending : Bool;
+    inviteCode : Text;
+    name : Text;
+    timestamp : Time__900049286
+  };
+type ReferralRelationship__501247020 =
+  {
+    bonusGiven : Coins__629831197;
+    refereeId : UserId__158757552;
+    referrerId : UserId__158757552;
+    var revokeReason : ?Text;
+    var status : ReferralStatus__981383340;
+    timestamp : Timestamp__301639476
+  };
+type ReferralStatus__981383340 = {#active; #flagged; #revoked};
+type SessionRecord__307620417 =
+  {expiresAt : Timestamp__301639476; principal : UserId__158757552};
+type SettingsChangeLog__758636692 =
+  {
+    adminId : UserId__158757552;
+    field : Text;
+    newVal : Text;
+    oldVal : Text;
+    timestamp : Timestamp__301639476
+  };
+type TaskCompletionKey__998404818 = Text;
+type TaskCompletion__236903525 =
+  {
+    completedAt : Timestamp__301639476;
+    taskId : Nat;
+    userId : UserId__158757552
+  };
+type Task__938246604 =
+  {
+    coinReward : Coins__629831197;
+    description : Text;
+    id : Nat;
+    isActive : Bool;
+    title : Text
+  };
+type Time__796480547 = Int__270357528;
+type Time__900049286 = Time__796480547;
+type Timestamp__301639476 = Int;
+type TransactionMethod__988620803 =
+  {#ad; #admin; #daily; #referral; #task; #withdrawal};
+type Transaction__427854489 =
+  {
+    amount : Coins__629831197;
+    createdAt : Timestamp__301639476;
+    id : Nat;
+    isCredit : Bool;
+    method : TransactionMethod__988620803;
+    note : Text;
+    userId : UserId__158757552
+  };
+type UserId__158757552 = Principal;
+type UserProfile__277265826 =
+  {
+    blockHistory : [BlockAuditEntry__17361828];
+    var coinBalance : Coins__629831197;
+    createdAt : Timestamp__301639476;
+    var currentStreak : Nat;
+    isBlocked : Bool;
+    var lastLoginDate : Timestamp__301639476;
+    mobileNumber : ?Text;
+    mobileVerified : Bool;
+    principal : UserId__158757552;
+    referralCode : Text;
+    var referredBy : ?UserId__158757552;
+    username : Text
+  };
+type UserRole__1054455867 = {#admin; #guest; #user};
+type WithdrawalMethod__174852062 = {#bank; #paytm; #upi};
+type WithdrawalRequest__770676552 =
+  {
+    var adminNote : Text;
+    coinsDeducted : Coins__629831197;
+    createdAt : Timestamp__301639476;
+    details : Text;
+    id : Nat;
+    method : WithdrawalMethod__174852062;
+    var paidAt : ?Timestamp__301639476;
+    var paymentDetails : ?Text;
+    var resolvedAt : ?Timestamp__301639476;
+    var resolvedBy : ?UserId__158757552;
+    rupeeAmount : Nat;
+    var status : WithdrawalStatus__598087654;
+    userId : UserId__158757552
+  };
+type WithdrawalStatus__598087654 = {#approved; #paid; #pending; #rejected};
+actor {
+  stable FAST2SMS_API_KEY : Text;
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1054455867>
+    };
+  stable adRecords :
+    {
+      var root : Node__46230540<UserId__158757552, AdWatchRecord__999013527>;
+      var size : Nat__490723111
+    };
+  stable announcementCounter : {var value : Nat};
+  stable announcements :
+    {
+      var root : Node__46230540<Nat, Announcement__160704614>;
+      var size : Nat__490723111
+    };
+  stable dailyClaims :
+    {
+      var root :
+        Node__46230540<UserId__158757552, DailyClaimRecord__343162850>;
+      var size : Nat__490723111
+    };
+  stable dismissals :
+    {var root : Node__92254746<(Principal, Nat)>; var size : Nat__490723111};
+  stable fraudFlags :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<FraudFlag__888929505>>;
+      var size : Nat__490723111
+    };
+  stable ic :
+    actor {
+      http_request :
+        shared HttpRequest__724360965 -> async HttpResponse__943424984;
+      raw_rand : shared () -> async Blob
+    };
+  stable inviteState :
+    {
+      var inviteCodes : Map__605269027<Text, InviteCode__761281821>;
+      var rsvps : Map__605269027<Text, RSVP__815186634>
+    };
+  stable mobileToUser :
+    {
+      var root : Node__46230540<Text, UserId__158757552>;
+      var size : Nat__490723111
+    };
+  stable pendingOtps :
+    {
+      var root : Node__46230540<Text, OtpRecord__734798553>;
+      var size : Nat__490723111
+    };
+  stable pendingPrincipals :
+    {
+      var root : Node__46230540<Text, UserId__158757552>;
+      var size : Nat__490723111
+    };
+  stable referralRelationships :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?ReferralRelationship__501247020]];
+      var elementIndex : Nat__490723111
+    };
+  stable sessions :
+    {
+      var root : Node__46230540<Text, SessionRecord__307620417>;
+      var size : Nat__490723111
+    };
+  stable settingsChangelog :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?SettingsChangeLog__758636692]];
+      var elementIndex : Nat__490723111
+    };
+  stable settingsVar : {var value : AppSettings__416535824};
+  stable taskCompletions :
+    {
+      var root :
+        Node__46230540<TaskCompletionKey__998404818,
+                        TaskCompletion__236903525>;
+      var size : Nat__490723111
+    };
+  stable tasks :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Task__938246604]];
+      var elementIndex : Nat__490723111
+    };
+  stable transactions :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Transaction__427854489]];
+      var elementIndex : Nat__490723111
+    };
+  stable users :
+    {
+      var root : Node__46230540<UserId__158757552, UserProfile__277265826>;
+      var size : Nat__490723111
+    };
+  stable withdrawalRequests :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?WithdrawalRequest__770676552]];
+      var elementIndex : Nat__490723111
+    }
+};

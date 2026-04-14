@@ -1,0 +1,25 @@
+{
+  "overview": "CoinEarner is a rewards-based app where users earn coins by watching ads, claiming daily streak rewards, referring others, and completing tasks. Coins convert to INR and can be withdrawn via UPI, Paytm, or bank transfer. Features a comprehensive admin panel for managing users, withdrawals, earnings, fraud protection, and announcements.",
+  "features": [
+    "Earn coins by watching ads, daily streaks, referrals, and tasks",
+    "Convert coins to INR (1000 coins = ₹10) with UPI/Paytm/bank withdrawal",
+    "Leaderboard showing top 50 weekly and all-time earners with personal rank",
+    "Admin panel with user management, withdrawal approvals, earnings control, fraud detection",
+    "Real-time coin balance and rupee balance tracking",
+    "Referral system with invite codes and bonus tracking",
+    "Fraud protection with automatic flagging and admin review workflow",
+    "In-app announcements and notification toasts"
+  ],
+  "category": "finance-rewards",
+  "tags": [
+    "rewards",
+    "coins",
+    "earnings",
+    "leaderboard",
+    "withdrawals",
+    "admin",
+    "referrals",
+    "fraud-protection"
+  ],
+  "last_updated": "2026-04-13T01:22:55.080Z"
+}

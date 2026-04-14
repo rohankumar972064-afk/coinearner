@@ -1,0 +1,404 @@
+type WithdrawalStatus = 
+ variant {
+   approved;
+   paid;
+   pending;
+   rejected;
+ };
+type WithdrawalRequestPublic = 
+ record {
+   adminNote: text;
+   coinsDeducted: Coins;
+   createdAt: Timestamp;
+   details: text;
+   id: nat;
+   method: WithdrawalMethod;
+   paidAt: opt Timestamp;
+   paymentDetails: opt text;
+   resolvedAt: opt Timestamp;
+   resolvedBy: opt UserId;
+   rupeeAmount: nat;
+   status: WithdrawalStatus;
+   userId: UserId;
+ };
+type WithdrawalMethod = 
+ variant {
+   bank;
+   paytm;
+   upi;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfilePublic = 
+ record {
+   blockHistory: vec BlockAuditEntry;
+   coinBalance: Coins;
+   createdAt: Timestamp;
+   currentStreak: nat;
+   isBlocked: bool;
+   lastLoginDate: Timestamp;
+   mobileNumber: opt text;
+   mobileVerified: bool;
+   "principal": UserId;
+   referralCode: text;
+   referredBy: opt UserId;
+   username: text;
+ };
+type UserId = principal;
+type UserAdminDetail = 
+ record {
+   fraudFlagCount: nat;
+   profile: UserProfilePublic;
+   totalCoinsEarned: Coins;
+   totalWithdrawnRupees: nat;
+ };
+type TransactionMethod = 
+ variant {
+   ad;
+   admin;
+   daily;
+   referral;
+   task;
+   withdrawal;
+ };
+type Transaction = 
+ record {
+   amount: Coins;
+   createdAt: Timestamp;
+   id: nat;
+   isCredit: bool;
+   method: TransactionMethod;
+   note: text;
+   userId: UserId;
+ };
+type Timestamp = int;
+type TaskCompletion = 
+ record {
+   completedAt: Timestamp;
+   taskId: nat;
+   userId: UserId;
+ };
+type Task = 
+ record {
+   coinReward: Coins;
+   description: text;
+   id: nat;
+   isActive: bool;
+   title: text;
+ };
+type SettingsChangeLog = 
+ record {
+   adminId: UserId;
+   field: text;
+   newVal: text;
+   oldVal: text;
+   timestamp: Timestamp;
+ };
+type ReferralStatus = 
+ variant {
+   active;
+   flagged;
+   revoked;
+ };
+type ReferralRelationshipPublic = 
+ record {
+   bonusGiven: Coins;
+   refereeId: UserId;
+   referrerId: UserId;
+   revokeReason: opt text;
+   status: ReferralStatus;
+   timestamp: Timestamp;
+ };
+type LeaderboardResult = 
+ record {
+   entries: vec LeaderboardEntry;
+   userRank: record {
+               coinsEarned: nat;
+               rank: nat;
+               username: text;
+             };
+ };
+type LeaderboardEntry = 
+ record {
+   coinsEarned: nat;
+   rank: nat;
+   userId: text;
+   username: text;
+ };
+type FraudStats = 
+ record {
+   mostCommonFlagType: text;
+   resolvedFlags: nat;
+   totalCoinsRolledBack: nat;
+   totalFlagged: nat;
+   unresolvedFlags: nat;
+ };
+type FraudResolution = 
+ variant {
+   blockUser;
+   dismiss;
+   markLegitimate;
+ };
+type FraudFlagType = 
+ variant {
+   earlyWithdrawal;
+   manualFlag;
+   multipleAccounts;
+   referralLoop;
+   suspiciousAdClicks;
+   suspiciousReferral;
+ };
+type FraudFlagPublic = 
+ record {
+   evidence: text;
+   flagType: FraudFlagType;
+   flaggedAt: Timestamp;
+   isResolved: bool;
+   reason: text;
+   resolution: opt FraudResolution;
+   resolvedAt: opt Timestamp;
+   resolvedBy: opt UserId;
+   userId: UserId;
+ };
+type EnhancedAdminStats = 
+ record {
+   activeUsersThisWeek: nat;
+   avgCoinsPerAd: nat;
+   dailyEarningsTrend: vec DailyEarningEntry;
+   earningsBreakdown: EarningsBreakdown;
+   pendingWithdrawalsCount: nat;
+   totalAdsWatched: nat;
+   totalApprovedWithdrawalsRupees: nat;
+   totalCoinsEarned: nat;
+   totalCoinsInCirculation: Coins;
+   totalRupeesPaidOut: nat;
+   totalUsers: nat;
+ };
+type EarningsBreakdown = 
+ record {
+   fromAdmin: nat;
+   fromAds: nat;
+   fromDaily: nat;
+   fromReferral: nat;
+   fromTasks: nat;
+ };
+type DailyEarningEntry = 
+ record {
+   coinsEarned: nat;
+   date: text;
+   rupeesWithdrawn: nat;
+ };
+type Coins = nat;
+type BlockAuditEntry = 
+ record {
+   adminId: UserId;
+   blocked: bool;
+   reason: text;
+   timestamp: Timestamp;
+ };
+type AppSettings = 
+ record {
+   adsEnabled: bool;
+   coinsPerAd: nat;
+   dailyBaseReward: nat;
+   dailyCoinsGrantCap: nat;
+   dailyRewardsEnabled: bool;
+   fraudPenaltyCoins: nat;
+   lastModified: Timestamp;
+   maxCoinsPerUser: nat;
+   maxDailyAdWatches: nat;
+   minWithdrawalRupees: nat;
+   modifiedBy: opt UserId;
+   referralBonus: nat;
+   referralsEnabled: bool;
+   streakCap: nat;
+   streakMultiplier: nat;
+   tasksEnabled: bool;
+   withdrawalsEnabled: bool;
+ };
+type AnnouncementUrgency = 
+ variant {
+   info;
+   urgent;
+   warning;
+ };
+type AnnouncementTarget = 
+ variant {
+   adminsOnly;
+   all;
+   inactiveUsers;
+   newUsers;
+ };
+type AnnouncementPublic = 
+ record {
+   createdAt: Timestamp;
+   createdBy: UserId;
+   expiresAt: opt Timestamp;
+   id: nat;
+   isActive: bool;
+   message: text;
+   scheduledAt: opt Timestamp;
+   target: AnnouncementTarget;
+   title: text;
+   urgency: AnnouncementUrgency;
+ };
+type AdminStats = 
+ record {
+   pendingWithdrawalsCount: nat;
+   totalApprovedWithdrawalsRupees: nat;
+   totalCoinsInCirculation: Coins;
+   totalUsers: nat;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  adminAddCoins: (userId: UserId, amount: Coins, note: text) -> ();
+  adminAddWithdrawalNote: (requestId: nat, note: text) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  adminApproveWithdrawal: (requestId: nat, note: text) -> ();
+  adminBulkApproveWithdrawals: (requestIds: vec nat, note: text) ->
+   (record {
+      failed: nat;
+      succeeded: nat;
+    });
+  adminBulkBlockUsers: (userIds: vec UserId, blocked: bool, reason: text) ->
+   (record {
+      failed: nat;
+      succeeded: nat;
+    });
+  adminBulkRejectWithdrawals: (requestIds: vec nat, reason: text) ->
+   (record {
+      failed: nat;
+      succeeded: nat;
+    });
+  adminCreateAnnouncement: (title: text, message: text, urgency:
+   AnnouncementUrgency, target: AnnouncementTarget, scheduledAt:
+   opt Timestamp, expiresAt: opt Timestamp) -> (nat);
+  adminDeductCoins: (userId: UserId, amount: Coins, reason: text) -> ();
+  adminDeleteAnnouncement: (id: nat) -> (variant {
+                                           err: text;
+                                           ok;
+                                         });
+  adminDetectSuspiciousReferralsByTime: () ->
+   (vec ReferralRelationshipPublic) query;
+  adminFlagUser: (userId: UserId, reason: text) -> (variant {
+                                                      err: text;
+                                                      ok;
+                                                    });
+  adminGetAllReferrals: () -> (vec ReferralRelationshipPublic) query;
+  adminGetAllTransactions: (userId: opt UserId, method:
+   opt TransactionMethod, fromDate: opt Timestamp, toDate: opt Timestamp,
+   limit: nat, offset: nat) ->
+   (record {
+      total: nat;
+      transactions: vec Transaction;
+    }) query;
+  adminGetAllUsers: () -> (vec UserAdminDetail) query;
+  adminGetAllWithdrawals: (statusFilter: opt WithdrawalStatus, userIdFilter:
+   opt UserId, fromDate: opt Timestamp, toDate: opt Timestamp, minRupees:
+   opt nat, maxRupees: opt nat) -> (vec WithdrawalRequestPublic) query;
+  adminGetEnhancedStats: () -> (EnhancedAdminStats) query;
+  adminGetFlaggedUsers: () -> (vec UserProfilePublic) query;
+  adminGetFraudFlags: (unresolvedOnly: bool) -> (vec FraudFlagPublic) query;
+  adminGetFraudStats: () -> (FraudStats) query;
+  adminGetSettings: () -> (AppSettings) query;
+  adminGetSettingsChangeLog: () -> (vec SettingsChangeLog) query;
+  adminGetStats: () -> (AdminStats) query;
+  adminGetUserDetail: (userId: UserId) -> (opt UserAdminDetail) query;
+  adminGetUserReferralChain: (userId: UserId) ->
+   (record {
+      referred: vec UserProfilePublic;
+      referredBy: opt UserProfilePublic;
+    }) query;
+  adminListAnnouncements: () -> (vec AnnouncementPublic) query;
+  adminMarkWithdrawalPaid: (id: nat, paymentRef: text) -> ();
+  adminRejectWithdrawal: (requestId: nat, adminNote: text) -> ();
+  adminResolveFraudFlag: (userId: UserId, flagType: FraudFlagType,
+   resolution: FraudResolution) -> (variant {
+                                      err: text;
+                                      ok;
+                                    });
+  adminRevokeReferral: (referrerId: UserId, refereeId: UserId, reason: 
+   text, deductBonus: bool) -> (variant {
+                                  err: text;
+                                  ok;
+                                });
+  adminToggleBlock: (userId: UserId, blocked: bool, reason: text) -> ();
+  adminUpdateAnnouncement: (id: nat, title: text, message: text, urgency:
+   AnnouncementUrgency, target: AnnouncementTarget, scheduledAt:
+   opt Timestamp, expiresAt: opt Timestamp, isActive: bool) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  adminUpdateSettings: (next: AppSettings) -> (variant {
+                                                 err: text;
+                                                 ok;
+                                               });
+  applyReferralCode: (code: text, sessionToken: opt text) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  claimDailyReward: (sessionToken: opt text) -> (Coins);
+  completeTask: (taskId: nat, sessionToken: opt text) -> (Coins);
+  dismissAnnouncement: (id: nat, sessionToken: opt text) ->
+   (variant {
+      err: text;
+      ok;
+    });
+  getActiveAnnouncements: (sessionToken: opt text) ->
+   (vec AnnouncementPublic) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCoinBalance: (sessionToken: opt text) -> (Coins) query;
+  getMyCompletedTasks: (sessionToken: opt text) -> (vec TaskCompletion) query;
+  getMyMobileStatus: (sessionToken: opt text) ->
+   (record {
+      mobileNumber: opt text;
+      mobileVerified: bool;
+    }) query;
+  getMyProfile: (sessionToken: opt text) -> (opt UserProfilePublic) query;
+  getMyReferralCode: (sessionToken: opt text) -> (text);
+  getMyWithdrawals: (sessionToken: opt text) ->
+   (vec WithdrawalRequestPublic) query;
+  getRupeeBalance: (sessionToken: opt text) -> (nat) query;
+  getSessionPrincipal: (token: text) -> (opt UserId) query;
+  getSettings: () -> (AppSettings) query;
+  getTopEarners: (period: text, limit: nat, sessionToken: opt text) ->
+   (LeaderboardResult) query;
+  getTransactionHistory: (limit: nat, offset: nat, sessionToken: opt text) ->
+   (record {
+      total: nat;
+      transactions: vec Transaction;
+    }) query;
+  getUserProfile: (userId: UserId, sessionToken: opt text) ->
+   (opt UserProfilePublic) query;
+  isCallerAdmin: () -> (bool) query;
+  listTasks: () -> (vec Task) query;
+  loginWithMobileOTP: (mobileNumber: text, otpCode: text) ->
+   (variant {
+      err: text;
+      ok: record {
+            isNewUser: bool;
+            sessionToken: text;
+          };
+    });
+  registerUser: (username: text, sessionToken: opt text) ->
+   (UserProfilePublic);
+  requestMobileOTP: (mobileNumber: text) -> (variant {
+                                               err: text;
+                                               ok: text;
+                                             });
+  submitWithdrawal: (method: WithdrawalMethod, details: text, rupeeAmount:
+   nat, paymentDetails: opt text, sessionToken: opt text) ->
+   (WithdrawalRequestPublic);
+  verifyMobileOTP: (mobileNumber: text, otpCode: text, sessionToken:
+   opt text) -> (variant {
+                   err: text;
+                   ok: text;
+                 });
+  watchAd: (sessionToken: opt text) -> (Coins);
+}
